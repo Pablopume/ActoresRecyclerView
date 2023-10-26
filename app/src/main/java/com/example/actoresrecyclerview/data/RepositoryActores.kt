@@ -44,7 +44,7 @@ class RepositoryActores(file: InputStream? = null) {
         return lista
     }
     fun getActorId(id: Int): Actores {
-        return lista[id]
+        return lista.firstOrNull { it.id == id } ?: lista[0]
     }
 
     fun addActor(actor: Actores) = lista.add(actor)
