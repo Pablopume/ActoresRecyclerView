@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.actoresrecyclerview.ui.pantallamain.MainActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:background="@color/purple"
+        android:hint="@string/nombre"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/valoon" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="400dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/slider2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+        <RadioButton
+            android:id="@+id/radioButtonHombre"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/valoon"
+            android:text="@string/masculino">
+
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioButtonMujer"
+            android:layout_width="131dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/valoon"
+            android:text="@string/femenino">
+
+        </RadioButton>
+
+        <RadioButton
+            android:id="@+id/radioButtonOtro"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/valoon"
+            android:text="@string/otro">
+
+        </RadioButton>
+
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/textViewPremiosOscar"
+        android:layout_width="228dp"
+        android:layout_height="51dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="109dp"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/valoon"
+        android:text="@string/premios_scar"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/slider2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        app:layout_constraintVertical_bias="0.076" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="154dp"
+        android:layout_marginEnd="154dp"
+        android:fontFamily="@font/valoon"
+        android:text="@string/est_vivo"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/slider2" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider2"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="86dp"
+        android:layout_marginBottom="38dp"
+        android:stepSize="1.0"
+        android:valueFrom="0.0"
+        android:valueTo="10.0"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout3"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="115dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="89dp"
+
+        android:hint="@string/pel_cula_famosa"
+        app:layout_constraintBottom_toTopOf="@+id/updateButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/peliculaFam"
+            android:layout_width="193dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/valoon"
+            tools:layout_editor_absoluteX="36dp"
+            tools:layout_editor_absoluteY="351dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- En tu layout XML -->
+
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="410dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="1dp"
+        android:fontFamily="@font/valoon"
+        android:text="@string/actualizar_actor"
+        app:layout_constraintBottom_toTopOf="@+id/beforeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+
+    <ImageButton
+        android:id="@+id/beforeButton"
+        android:layout_width="96dp"
+        android:layout_height="100dp"
+        android:background="@color/purple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/addButton"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateButton"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+
+    <ImageButton
+        android:id="@+id/imageButtonBin"
+        android:layout_width="96dp"
+        android:layout_height="100dp"
+        android:background="@color/purple"
+        android:src="@drawable/trash_can"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nextButton"
+        app:layout_constraintStart_toEndOf="@+id/addButton"
+        app:layout_constraintTop_toBottomOf="@+id/updateButton" />
+
+    <ImageButton
+        android:id="@+id/nextButton"
+        android:layout_width="96dp"
+        android:layout_height="100dp"
+        android:background="@color/purple"
+        android:src="@drawable/right_arrow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonBin"
+        app:layout_constraintTop_toBottomOf="@+id/updateButton" />
+
+    <ImageButton
+        android:id="@+id/addButton"
+        android:layout_width="96dp"
+        android:layout_height="100dp"
+        android:background="@color/purple"
+        android:src="@drawable/add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonBin"
+        app:layout_constraintStart_toEndOf="@+id/beforeButton"
+        app:layout_constraintTop_toBottomOf="@+id/updateButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
