@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import com.example.actoresapp.domain.usecases.AddActorUseCase
+import com.example.actoresrecyclerview.domain.usecases.AddActorUseCase
 import com.example.actoresapp.domain.usecases.DeleteActorUseCase
 import com.example.actoresapp.domain.usecases.DeshabilitarBotonesUseCase
 import com.example.actoresapp.domain.usecases.GetActorIdUseCase
 import com.example.actoresapp.domain.usecases.GetActoresUseCase
 import com.example.actoresapp.domain.usecases.UpdateActorUseCase
 import com.example.actoresapp.utils.StringProvider
+import com.example.actoresrecyclerview.data.RepositoryActores
 import com.example.actoresrecyclerview.domain.modelo.Actores
 import com.example.recyclerview.R
 import com.example.recyclerview.databinding.ActivityMainBinding
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         MainViewModelFactory(
             AddActorUseCase(),
             DeleteActorUseCase(),
-            GetActoresUseCase(),
+            GetActoresUseCase(RepositoryActores(assets.open("data.json"))),
             GetActorIdUseCase(),
             UpdateActorUseCase(),
             StringProvider(this),
@@ -36,6 +37,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(root)
         }
+        val intent=intent
+        if(intent.hasExtra("ID_ELEMENTO")){
+            val id= intent.getIntExtra("ID_ELEMENTO",0)
+            viewModel.getActor(id)
+        }
+
         viewModel.deshabilitarBotones()
         observeViewModel()
         metodos()
@@ -56,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
             imageButtonBin.setOnClickListener {
                 viewModel.deleteActor()
-                viewModel.deshabilitarBotones()
+                finish()
 
             }
             addButton.setOnClickListener {

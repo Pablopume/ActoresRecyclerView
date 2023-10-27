@@ -1,9 +1,8 @@
-package com.example.actoresrecyclerview.ui.pantallamain
+package com.example.actoresrecyclerview.ui.pantallarecycled
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.actoresrecyclerview.domain.modelo.Actores
 import com.example.recyclerview.R
@@ -11,7 +10,7 @@ import com.example.recyclerview.databinding.ItemActorBinding
 
 class ActoresAdapter(
     private var actores: List<Actores>,
-    private val onClickButton: (String) -> Unit)
+    private val onClickButton: (Int) -> Unit)
     : RecyclerView.Adapter<ActoresViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActoresViewHolder {
@@ -36,15 +35,14 @@ class ActoresViewHolder(private val view: View) : RecyclerView.ViewHolder(view) 
     val binding = ItemActorBinding.bind(view)
 
     fun render(actor: Actores,
-               onClickButton: (String) -> Unit) {
+               onClickButton: (Int) -> Unit) {
 
         with(binding){
             tvNombre.text = actor.nombre
             tvPelicula.text = actor.peliculaFamosa
+            button2.setOnClickListener { onClickButton(actor.id) }
         }
-        view.findViewById<TextView>(R.id.button2).setOnClickListener {
-            onClickButton(actor.nombre)
-        }
+
     }
 }
 

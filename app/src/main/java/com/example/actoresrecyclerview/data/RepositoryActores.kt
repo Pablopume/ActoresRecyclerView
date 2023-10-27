@@ -47,7 +47,11 @@ class RepositoryActores(file: InputStream? = null) {
         return lista.firstOrNull { it.id == id } ?: lista[0]
     }
 
-    fun addActor(actor: Actores) = lista.add(actor)
+    fun addActor(actor: Actores) : Boolean{
+        actor.id=getAutoId()
+        return lista.add(actor)
+
+    }
 
     fun deleteActor(actor: Actores) = lista.remove(actor)
 
@@ -55,6 +59,9 @@ class RepositoryActores(file: InputStream? = null) {
         lista[lista.indexOf(actorAntiguo)] = actorActualizado
     }
 
+    fun getAutoId(): Int {
+        return lista.maxOfOrNull { it.id }?.plus(1) ?: 1
+    }
     fun listEmpty(): Boolean {
         return lista.isEmpty()
     }

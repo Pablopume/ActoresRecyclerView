@@ -13,7 +13,7 @@
         android:theme="@style/Theme.ActoresRecyclerView"
         tools:targetApi="31">
         <activity
-            android:name="com.example.actoresrecyclerview.ui.pantallamain.ReciclerActivity"
+            android:name="com.example.actoresrecyclerview.ui.pantallarecycled.ReciclerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Actores(
     @Json(name="id")
-    val id: Int= 0,
+    var id: Int= 0,
     @Json (name="nombre")
     val nombre: String = "",
     @Json (name="activo")

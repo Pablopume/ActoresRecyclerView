@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.actoresapp.domain.usecases.AddActorUseCase
+import com.example.actoresrecyclerview.domain.usecases.AddActorUseCase
 import com.example.actoresapp.domain.usecases.DeleteActorUseCase
 import com.example.actoresapp.domain.usecases.DeshabilitarBotonesUseCase
 import com.example.actoresapp.domain.usecases.GetActorIdUseCase
@@ -35,6 +35,10 @@ class MainViewModel(private val addActoruseCase: AddActorUseCase,
         )
     }
 
+    fun getActor(id: Int){
+        _uiState.value=MainState(actores = getActorIdUseCase(id))
+    }
+
     fun deleteActor() {
         if (!deleteActorUseCase.deleteActor(_uiState.value?.actores!!)) {
             _uiState.value = MainState(
@@ -43,8 +47,6 @@ class MainViewModel(private val addActoruseCase: AddActorUseCase,
         } else {
             if (deleteActorUseCase.listEmpty()) {
                 _uiState.value = MainState(actores = Actores())
-            } else {
-                _uiState.value = MainState(actores = getActorIdUseCase(0))
             }
         }
     }
