@@ -11,4 +11,5 @@
     <string name="pel_cula_famosa">Película Famosa</string>
     <string name="name">name</string>
     <string name="actualizar_actor">ACTUALIZAR ACTOR</string>
+    <string name="button">Button</string>
 </resources>

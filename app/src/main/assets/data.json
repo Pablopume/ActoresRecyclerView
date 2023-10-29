@@ -5,7 +5,7 @@
     "activo": true,
     "pelicula": "titanic",
     "rating": 2,
-    "genero": "masc"
+    "genero": "Masculino"
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "activo": true,
     "pelicula": "torrente",
     "rating": 9,
-    "genero": "masc"
+    "genero": "Masculino"
   },
   {
     "id": 3,
@@ -21,7 +21,7 @@
     "activo": true,
     "pelicula": "PIRATAS DEL CARIBE",
     "rating": 2,
-    "genero": "fem"
+    "genero": "Femenino"
   },
   {
     "id": 4,
@@ -29,7 +29,7 @@
     "activo": true,
     "pelicula": "zorro",
     "rating": 7,
-    "genero": "masc"
+    "genero": "Masculino"
   },
   {
     "id": 5,
@@ -37,6 +37,6 @@
     "activo": true,
     "pelicula": "shutter",
     "rating": 1,
-    "genero": "masc"
+    "genero": "Masculino"
   }
 ]

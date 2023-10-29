@@ -10,8 +10,8 @@ import com.example.recyclerview.databinding.ItemActorBinding
 
 class ActoresAdapter(
     private var actores: List<Actores>,
-    private val onClickButton: (Int) -> Unit)
-    : RecyclerView.Adapter<ActoresViewHolder>() {
+    private val onClickButton: (Int) -> Unit
+) : RecyclerView.Adapter<ActoresViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActoresViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -21,28 +21,29 @@ class ActoresAdapter(
     override fun onBindViewHolder(holder: ActoresViewHolder, position: Int) {
         holder.render(actores[position], onClickButton)
     }
+
     override fun getItemCount(): Int = actores.size
 
 
-fun cambiarLista(lista: List<Actores>) {
-    actores = lista
-    notifyDataSetChanged()
-}
+    fun cambiarLista(lista: List<Actores>) {
+        actores = lista
+        notifyDataSetChanged()
+    }
 }
 
 class ActoresViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     val binding = ItemActorBinding.bind(view)
 
-    fun render(actor: Actores,
-               onClickButton: (Int) -> Unit) {
-
-        with(binding){
+    fun render(
+        actor: Actores,
+        onClickButton: (Int) -> Unit
+    ) {
+        with(binding) {
             tvNombre.text = actor.nombre
             tvPelicula.text = actor.peliculaFamosa
             button2.setOnClickListener { onClickButton(actor.id) }
         }
-
     }
 }
 

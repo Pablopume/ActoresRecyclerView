@@ -4,19 +4,20 @@ import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.android.parcel.Parcelize
+
 @JsonClass(generateAdapter = true)
 @Parcelize
 data class Actores(
-    @Json(name="id")
-    var id: Int= 0,
-    @Json (name="nombre")
-    val nombre: String = "",
-    @Json (name="activo")
+    @Json(name = Constantes.ID)
+    var id: Int = 0,
+    @Json(name = Constantes.NOMBRE)
+    val nombre: String = Constantes.EMPTY,
+    @Json(name = Constantes.ACTIVO)
     val vivo: Boolean = true,
-    @Json(name="pelicula")
-    val peliculaFamosa: String = "",
-    @Json (name="rating")
+    @Json(name = Constantes.PELICULA)
+    val peliculaFamosa: String = Constantes.EMPTY,
+    @Json(name = Constantes.RATING)
     val premiosOscar: Int = 0,
-    @Json(name="genero")
-    val genero: String = ""
+    @Json(name = Constantes.GENERO)
+    val genero: String = Constantes.EMPTY
 ) : Parcelable

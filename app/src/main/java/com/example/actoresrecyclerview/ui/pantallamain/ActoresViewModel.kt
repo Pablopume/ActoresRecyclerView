@@ -6,68 +6,71 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.actoresrecyclerview.domain.usecases.AddActorUseCase
 import com.example.actoresrecyclerview.domain.usecases.DeleteActorUseCase
-import com.example.actoresapp.domain.usecases.GetActorIdUseCase
-import com.example.actoresapp.domain.usecases.GetActoresUseCase
-import com.example.actoresapp.domain.usecases.UpdateActorUseCase
+import com.example.actoresrecyclerview.domain.usecases.GetActorIdUseCase
+import com.example.actoresrecyclerview.domain.usecases.UpdateActorUseCase
 import com.example.actoresapp.utils.StringProvider
 import com.example.actoresrecyclerview.domain.modelo.Actores
+import com.example.actoresrecyclerview.domain.usecases.ActorRepetidoUseCase
+import com.example.actoresrecyclerview.domain.usecases.ActoresEmptyUseCase
+import com.example.actoresrecyclerview.ui.Constantes
 import com.example.recyclerview.R
 
-class MainViewModel(private val addActoruseCase: AddActorUseCase,
-                    private val deleteActorUseCase: DeleteActorUseCase,
-                    private val getActoresUseCase: GetActoresUseCase,
-                    private val getActorIdUseCase: GetActorIdUseCase,
-                    private val updateActorUseCase: UpdateActorUseCase,
-                    private val stringProvider: StringProvider
+class MainViewModel(
+    private val addActoruseCase: AddActorUseCase,
+    private val deleteActorUseCase: DeleteActorUseCase,
+    private val getActorIdUseCase: GetActorIdUseCase,
+    private val updateActorUseCase: UpdateActorUseCase,
+    private val actoresEmptyUseCase: ActoresEmptyUseCase,
+    private val actorRepetidoUseCase: ActorRepetidoUseCase,
+    private val stringProvider: StringProvider
 
-                    ) : ViewModel(){
+) : ViewModel() {
 
-    private val _uiState = MutableLiveData(MainState())
-    val uiState: LiveData<MainState> get() = _uiState
+    private val _uiState = MutableLiveData(ActoresState())
+    val uiState: LiveData<ActoresState> get() = _uiState
 
     init {
-        _uiState.value = MainState(
-
-            actores = _uiState.value.let { getActorIdUseCase(2) },
+        _uiState.value = ActoresState(
+            actores = getActorIdUseCase(1),
             error = null
         )
     }
 
-    fun getActor(id: Int){
-        _uiState.value=MainState(actores = getActorIdUseCase(id))
+    fun getActor(id: Int) {
+        _uiState.value = _uiState.value?.copy(actores = getActorIdUseCase(id))
     }
+
 
     fun deleteActor() {
         val actores = _uiState.value?.actores
-        if (actores != null && !deleteActorUseCase.deleteActor(actores)) {
-            _uiState.value = MainState(
+        if (actores != null && !deleteActorUseCase(actores)) {
+            _uiState.value = _uiState.value?.copy(
                 error = stringProvider.getString(R.string.app_name)
             )
         } else {
-            if (deleteActorUseCase.listEmpty()) {
-                _uiState.value = MainState(actores = Actores())
+            if (actoresEmptyUseCase()) {
+                _uiState.value = _uiState.value?.copy(actores = Actores())
             }
         }
     }
 
 
-
     fun addActor(actor: Actores) {
         val actores = _uiState.value?.actores
-        if (!addActoruseCase.hayRepetidos(actor)) {
-            if (!addActoruseCase.addActor(actor)) {
+        if (!actorRepetidoUseCase(actor)) {
+            if (!addActoruseCase(actor)) {
                 if (actores != null) {
-                    _uiState.value = MainState(
+                    _uiState.value = _uiState.value?.copy(
                         actores = actores,
                         error = stringProvider.getString(R.string.repetido)
                     )
                 }
             } else {
-                _uiState.value = MainState(actores = actor, error = null)
+                _uiState.value = _uiState.value?.copy(actores = actor, error = null)
             }
         } else {
             if (actores != null) {
-                _uiState.value = MainState(
+                _uiState.value = _uiState.value?.copy(
                     actores = actores,
                     error = stringProvider.getString(R.string.repetido)
                 )
@@ -76,42 +79,45 @@ class MainViewModel(private val addActoruseCase: AddActorUseCase,
     }
 
 
-
     fun errorMostrado() {
-        _uiState.value = MainState(error = null, actores = _uiState.value?.actores!!)
+        val actores = _uiState.value?.actores
+        if (actores != null) {
+            _uiState.value = _uiState.value?.copy(error = null, actores = actores)
+        }
     }
+
 
     fun updateActor(actor: Actores) {
         val actores = _uiState.value?.actores
         if (actores != null) {
             updateActorUseCase(actores, actor)
         }
-        _uiState.value = MainState(actores = actor)
+        _uiState.value = _uiState.value?.copy(actores = actor)
     }
-
-
 }
 
 class MainViewModelFactory(
     private val addActoruseCase: AddActorUseCase,
     private val deleteActorUseCase: DeleteActorUseCase,
-    private val getActoresUseCase: GetActoresUseCase,
     private val getActorIdUseCase: GetActorIdUseCase,
     private val updateActorUseCase: UpdateActorUseCase,
+    private val actoresEmptyUseCase: ActoresEmptyUseCase,
+    private val actoresRepetidoUseCase: ActorRepetidoUseCase,
     private val stringProvider: StringProvider,
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            @Suppress(Constantes.UNCHECKED_CAST)
             return MainViewModel(
                 addActoruseCase,
                 deleteActorUseCase,
-                getActoresUseCase,
                 getActorIdUseCase,
                 updateActorUseCase,
+                actoresEmptyUseCase,
+                actoresRepetidoUseCase,
                 stringProvider,
-
-                ) as T
+            ) as T
         }
         throw IllegalArgumentException(Constantes.UNKNOWN_VIEW_MODEL_CLASS)
     }

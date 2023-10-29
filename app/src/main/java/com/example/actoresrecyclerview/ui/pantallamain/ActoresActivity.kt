@@ -6,24 +6,26 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.actoresrecyclerview.domain.usecases.AddActorUseCase
 import com.example.actoresrecyclerview.domain.usecases.DeleteActorUseCase
-import com.example.actoresapp.domain.usecases.GetActorIdUseCase
-import com.example.actoresapp.domain.usecases.GetActoresUseCase
-import com.example.actoresapp.domain.usecases.UpdateActorUseCase
+import com.example.actoresrecyclerview.domain.usecases.GetActorIdUseCase
+import com.example.actoresrecyclerview.domain.usecases.UpdateActorUseCase
 import com.example.actoresapp.utils.StringProvider
-import com.example.actoresrecyclerview.data.RepositoryActores
 import com.example.actoresrecyclerview.domain.modelo.Actores
+import com.example.actoresrecyclerview.domain.usecases.ActorRepetidoUseCase
+import com.example.actoresrecyclerview.domain.usecases.ActoresEmptyUseCase
+import com.example.actoresrecyclerview.ui.Constantes
 import com.example.recyclerview.R
 import com.example.recyclerview.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class ActoresActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels {
         MainViewModelFactory(
             AddActorUseCase(),
             DeleteActorUseCase(),
-            GetActoresUseCase(RepositoryActores(assets.open("data.json"))),
             GetActorIdUseCase(),
             UpdateActorUseCase(),
+            ActoresEmptyUseCase(),
+            ActorRepetidoUseCase(),
             StringProvider(this)
         )
     }
@@ -34,13 +36,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(root)
         }
-        val intent=intent
-        if(intent.hasExtra("ID_ELEMENTO")){
-            val id= intent.getIntExtra("ID_ELEMENTO",0)
+        val intent = intent
+        if (intent.hasExtra(Constantes.ID_ELEMENTO)) {
+            val id = intent.getIntExtra(Constantes.ID_ELEMENTO, 0)
             viewModel.getActor(id)
         }
-
-
         observeViewModel()
         metodos()
         observeViewModel()
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             addButton.setOnClickListener {
                 if (textName.text.isNullOrEmpty() || peliculaFam.text.isNullOrEmpty()) {
                     Toast.makeText(
-                        this@MainActivity,
+                        this@ActoresActivity,
                         Constantes.RELLENA,
                         Toast.LENGTH_SHORT
                     ).show()
@@ -88,18 +88,19 @@ class MainActivity : AppCompatActivity() {
                 val vivo: Boolean = checkBox.isChecked
                 val peli: String = peliculaFam.text.toString()
 
-                    var actor = Actores(0, name, vivo, peli, slide, genero)
-                    viewModel.updateActor(actor)
+                var actor = Actores(0, name, vivo, peli, slide, genero)
+                viewModel.updateActor(actor)
 
 
             }
 
         }
     }
+
     private fun observeViewModel() {
-        viewModel.uiState.observe(this@MainActivity) { state ->
+        viewModel.uiState.observe(this@ActoresActivity) { state ->
             state.error?.let { error ->
-                Toast.makeText(this@MainActivity, error, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ActoresActivity, error, Toast.LENGTH_SHORT).show()
                 viewModel.errorMostrado()
             }
 
