@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.actoresrecyclerview.domain.usecases.AddActorUseCase
-import com.example.actoresapp.domain.usecases.DeleteActorUseCase
-import com.example.actoresapp.domain.usecases.DeshabilitarBotonesUseCase
+import com.example.actoresrecyclerview.domain.usecases.DeleteActorUseCase
 import com.example.actoresapp.domain.usecases.GetActorIdUseCase
 import com.example.actoresapp.domain.usecases.GetActoresUseCase
 import com.example.actoresapp.domain.usecases.UpdateActorUseCase
@@ -19,7 +18,6 @@ class MainViewModel(private val addActoruseCase: AddActorUseCase,
                     private val getActoresUseCase: GetActoresUseCase,
                     private val getActorIdUseCase: GetActorIdUseCase,
                     private val updateActorUseCase: UpdateActorUseCase,
-                    private val deshabilitarBotones: DeshabilitarBotonesUseCase,
                     private val stringProvider: StringProvider
 
                     ) : ViewModel(){
@@ -40,7 +38,8 @@ class MainViewModel(private val addActoruseCase: AddActorUseCase,
     }
 
     fun deleteActor() {
-        if (!deleteActorUseCase.deleteActor(_uiState.value?.actores!!)) {
+        val actores = _uiState.value?.actores
+        if (actores != null && !deleteActorUseCase.deleteActor(actores)) {
             _uiState.value = MainState(
                 error = stringProvider.getString(R.string.app_name)
             )
@@ -51,59 +50,42 @@ class MainViewModel(private val addActoruseCase: AddActorUseCase,
         }
     }
 
-    fun deshabilitarBotones() {
-        if (deshabilitarBotones.deshabilitarIzquierda(_uiState.value!!.actores)) {
-            _uiState.value = _uiState.value?.copy(botonIzquierda = false)
-        } else if (deshabilitarBotones.deshabilitarDerecha(_uiState.value!!.actores)) {
-            _uiState.value = _uiState.value?.copy(botonDerecha = false)
-        } else {
-            _uiState.value = _uiState.value?.copy(botonIzquierda = true, botonDerecha = true)
-        }
-    }
+
 
     fun addActor(actor: Actores) {
+        val actores = _uiState.value?.actores
         if (!addActoruseCase.hayRepetidos(actor)) {
             if (!addActoruseCase.addActor(actor)) {
-                _uiState.value = MainState(
-                    actores = _uiState.value!!.actores,
-                    error = stringProvider.getString(R.string.repetido)
-
-                )
+                if (actores != null) {
+                    _uiState.value = MainState(
+                        actores = actores,
+                        error = stringProvider.getString(R.string.repetido)
+                    )
+                }
             } else {
                 _uiState.value = MainState(actores = actor, error = null)
             }
         } else {
-            _uiState.value = MainState(
-                actores = _uiState.value?.actores!!,
-                error = stringProvider.getString(R.string.repetido)
-            )
-
-
+            if (actores != null) {
+                _uiState.value = MainState(
+                    actores = actores,
+                    error = stringProvider.getString(R.string.repetido)
+                )
+            }
         }
     }
 
-    fun getActorAnterior() {
-        val actor2: Actores = _uiState.value!!.actores
-        _uiState.value = MainState(
-            actores = getActoresUseCase.obtenerActorAnterior(actor2),
-            error = null
-        )
-    }
 
-    fun getActorSiguiente() {
-        val actor2: Actores = _uiState.value!!.actores
-        _uiState.value = MainState(
-            actores = getActoresUseCase.obtenerActorSiguiente(actor2),
-            error = null
-        )
-    }
 
     fun errorMostrado() {
         _uiState.value = MainState(error = null, actores = _uiState.value?.actores!!)
     }
 
     fun updateActor(actor: Actores) {
-        updateActorUseCase(_uiState.value!!.actores, actor)
+        val actores = _uiState.value?.actores
+        if (actores != null) {
+            updateActorUseCase(actores, actor)
+        }
         _uiState.value = MainState(actores = actor)
     }
 
@@ -117,7 +99,6 @@ class MainViewModelFactory(
     private val getActorIdUseCase: GetActorIdUseCase,
     private val updateActorUseCase: UpdateActorUseCase,
     private val stringProvider: StringProvider,
-    private val deshabilitarBotones: DeshabilitarBotonesUseCase,
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -128,7 +109,6 @@ class MainViewModelFactory(
                 getActoresUseCase,
                 getActorIdUseCase,
                 updateActorUseCase,
-                deshabilitarBotones,
                 stringProvider,
 
                 ) as T

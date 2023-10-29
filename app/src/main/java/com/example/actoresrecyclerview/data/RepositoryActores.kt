@@ -33,13 +33,7 @@ class RepositoryActores(file: InputStream? = null) {
             ejemplo?.let { lista.addAll(it) }
         }
     }
-    fun deshabilitarIzquierda(actor: Actores): Boolean {
-        return lista.indexOf(actor) == 0
-    }
 
-    fun deshabilitarDerecha(actor: Actores): Boolean {
-        return lista.indexOf(actor) + 1 == lista.size
-    }
     fun getListaActores(): List<Actores> {
         return lista
     }
@@ -56,6 +50,7 @@ class RepositoryActores(file: InputStream? = null) {
     fun deleteActor(actor: Actores) = lista.remove(actor)
 
     fun updateActores(actorAntiguo: Actores, actorActualizado: Actores) {
+        actorActualizado.id=actorAntiguo.id
         lista[lista.indexOf(actorAntiguo)] = actorActualizado
     }
 
@@ -70,22 +65,5 @@ class RepositoryActores(file: InputStream? = null) {
         return lista.contains(actor)
     }
 
-    fun getActorAnterior(actor: Actores): Actores {
 
-        val actor2: Actores = if ((lista.indexOf(actor) - 1 >= 0))
-            lista[lista.indexOf(actor) - 1]
-        else {
-            actor
-        }
-        return actor2
-    }
-
-    fun getActorSiguiente(actor: Actores): Actores {
-        val actor2: Actores = if ((lista.indexOf(actor) + 1 <= lista.size - 1))
-            lista[lista.indexOf(actor) + 1]
-        else {
-            actor
-        }
-        return actor2
-    }
 }

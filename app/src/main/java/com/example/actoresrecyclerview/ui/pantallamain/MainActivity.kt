@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.view.isVisible
 import com.example.actoresrecyclerview.domain.usecases.AddActorUseCase
-import com.example.actoresapp.domain.usecases.DeleteActorUseCase
-import com.example.actoresapp.domain.usecases.DeshabilitarBotonesUseCase
+import com.example.actoresrecyclerview.domain.usecases.DeleteActorUseCase
 import com.example.actoresapp.domain.usecases.GetActorIdUseCase
 import com.example.actoresapp.domain.usecases.GetActoresUseCase
 import com.example.actoresapp.domain.usecases.UpdateActorUseCase
@@ -26,8 +24,7 @@ class MainActivity : AppCompatActivity() {
             GetActoresUseCase(RepositoryActores(assets.open("data.json"))),
             GetActorIdUseCase(),
             UpdateActorUseCase(),
-            StringProvider(this),
-            DeshabilitarBotonesUseCase(),
+            StringProvider(this)
         )
     }
 
@@ -43,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.getActor(id)
         }
 
-        viewModel.deshabilitarBotones()
+
         observeViewModel()
         metodos()
         observeViewModel()
@@ -51,16 +48,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun metodos() {
         with(binding) {
-            nextButton.setOnClickListener {
-                viewModel.getActorSiguiente()
-                viewModel.deshabilitarBotones()
-
-            }
-            beforeButton.setOnClickListener {
-                viewModel.getActorAnterior()
-                viewModel.deshabilitarBotones()
-
-            }
             imageButtonBin.setOnClickListener {
                 viewModel.deleteActor()
                 finish()
@@ -86,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                     val peli: String = peliculaFam.text.toString()
                     var actor = Actores(1, name, vivo, peli, slide, genero)
                     viewModel.addActor(actor)
-                    viewModel.deshabilitarBotones()
+
                 }
             }
             updateButton.setOnClickListener {
@@ -100,12 +87,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 val vivo: Boolean = checkBox.isChecked
                 val peli: String = peliculaFam.text.toString()
-                var actorId = viewModel.uiState.value?.actores?.id
-                if (actorId != null) {
-                    var actor = Actores(actorId, name, vivo, peli, slide, genero)
+
+                    var actor = Actores(0, name, vivo, peli, slide, genero)
                     viewModel.updateActor(actor)
-                    viewModel.deshabilitarBotones()
-                }
+
+
             }
 
         }
@@ -122,16 +108,6 @@ class MainActivity : AppCompatActivity() {
                 with(binding) {
 
                     textName.setText(state.actores.nombre)
-                    if (state.botonIzquierda == false) {
-                        beforeButton.isVisible = false
-                    } else {
-                        if (state.botonDerecha == false) {
-                            nextButton.isVisible = false
-                        } else {
-                            beforeButton.isVisible = true
-                            nextButton.isVisible = true
-                        }
-                    }
 
                     when (state.actores.genero) {
                         radioButtonHombre.text -> radioButtonHombre.isChecked = true

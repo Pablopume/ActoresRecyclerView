@@ -1,4 +1,4 @@
-package com.example.actoresapp.domain.usecases
+package com.example.actoresrecyclerview.domain.usecases
 
 
 import com.example.actoresrecyclerview.data.RepositoryActores
