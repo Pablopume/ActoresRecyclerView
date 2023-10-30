@@ -33,7 +33,7 @@ class ActoresAdapter(
 
 class ActoresViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    val binding = ItemActorBinding.bind(view)
+    private val binding = ItemActorBinding.bind(view)
 
     fun render(
         actor: Actores,
