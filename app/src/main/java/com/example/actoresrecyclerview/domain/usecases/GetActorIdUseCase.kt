@@ -1,4 +1,5 @@
 package com.example.actoresrecyclerview.domain.usecases
+
 import com.example.actoresrecyclerview.data.RepositoryActores
 
 class GetActorIdUseCase {

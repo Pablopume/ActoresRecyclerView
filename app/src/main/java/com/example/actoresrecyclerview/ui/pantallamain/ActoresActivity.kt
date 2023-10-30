@@ -79,7 +79,7 @@ class ActoresActivity : AppCompatActivity() {
             updateButton.setOnClickListener {
                 val name: String = textName.text.toString()
                 val slide: Int = slider2.value.toInt()
-                var genero: String = ""
+                var genero: String = Constantes.EMPTY
                 when (radioGroup.checkedRadioButtonId) {
                     radioButtonHombre.id -> genero = radioButtonHombre.text.toString()
                     radioButtonMujer.id -> genero = radioButtonMujer.text.toString()

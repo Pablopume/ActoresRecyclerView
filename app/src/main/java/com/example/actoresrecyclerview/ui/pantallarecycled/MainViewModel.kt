@@ -8,7 +8,7 @@ import com.example.actoresrecyclerview.domain.usecases.GetActoresUseCase
 import com.example.actoresrecyclerview.ui.Constantes
 
 
-class MainViewModel(private val getActoresUseCase: GetActoresUseCase) : ViewModel() {
+class MainViewModel(getActoresUseCase: GetActoresUseCase) : ViewModel() {
     private val _uiState = MutableLiveData(MainState())
     val uiState: LiveData<MainState> get() = _uiState
 

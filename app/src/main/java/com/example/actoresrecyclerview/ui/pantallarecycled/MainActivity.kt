@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.actoresrecyclerview.domain.usecases.GetActoresUseCase
 import com.example.actoresrecyclerview.data.RepositoryActores
@@ -34,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         adapter = ActoresAdapter(listaPersonas, ::click)
         listaPersonas.let {
             binding.rvPersonas.adapter = adapter
-            binding.rvPersonas.layoutManager = LinearLayoutManager(this@MainActivity)
         }
     }
 
