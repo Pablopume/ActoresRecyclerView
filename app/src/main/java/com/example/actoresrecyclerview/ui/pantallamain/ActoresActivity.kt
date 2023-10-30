@@ -8,7 +8,7 @@ import com.example.actoresrecyclerview.domain.usecases.AddActorUseCase
 import com.example.actoresrecyclerview.domain.usecases.DeleteActorUseCase
 import com.example.actoresrecyclerview.domain.usecases.GetActorIdUseCase
 import com.example.actoresrecyclerview.domain.usecases.UpdateActorUseCase
-import com.example.actoresapp.utils.StringProvider
+import com.example.actoresrecyclerview.utils.StringProvider
 import com.example.actoresrecyclerview.domain.modelo.Actores
 import com.example.actoresrecyclerview.domain.usecases.ActorRepetidoUseCase
 import com.example.actoresrecyclerview.domain.usecases.ActoresEmptyUseCase
@@ -90,10 +90,7 @@ class ActoresActivity : AppCompatActivity() {
 
                 var actor = Actores(0, name, vivo, peli, slide, genero)
                 viewModel.updateActor(actor)
-
-
             }
-
         }
     }
 

@@ -24,7 +24,7 @@ class RecycledViewModelFactory(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            @Suppress(Constantes.UNCHECKED_CAST)
+            @Suppress("UNCHECKED_CAST")
             return MainViewModel(getActoresUseCase) as T
         }
         throw IllegalArgumentException(Constantes.UNKNOWN_VIEW_MODEL_CLASS)

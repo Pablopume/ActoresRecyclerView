@@ -13,7 +13,7 @@ class RepositoryActores(file: InputStream? = null) {
     }
 
     init {
-        if (lista.size == 0) {
+        if (lista.isEmpty()) {
             val moshi = Moshi.Builder()
                 .addLast(KotlinJsonAdapterFactory())
                 .build()

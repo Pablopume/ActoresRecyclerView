@@ -1,7 +1,6 @@
-package com.example.actoresapp.utils
+package com.example.actoresrecyclerview.utils
 
 import android.content.Context
-import androidx.annotation.StringRes
 
 class StringProvider(private val context: Context) {
     companion object {
